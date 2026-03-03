@@ -638,7 +638,7 @@ footer {
 <!-- TAB NAV -->
 <nav class="tab-nav">
   <button class="tab-nav-btn active" onclick="switchTab('overview', this)">📊 Overview <span class="tab-badge">Executive</span></button>
-  <button class="tab-nav-btn" onclick="switchTab('companies', this)">🏢 Company Intelligence <span class="tab-badge amber">Top 100</span></button>
+  <button class="tab-nav-btn" onclick="switchTab('companies', this)">🏢 Company Intelligence <span class="tab-badge amber" id="coTabBadge">115</span></button>
   <button class="tab-nav-btn" onclick="switchTab('talent', this)">👥 Talent Pool <span class="tab-badge green">95 Profiles</span></button>
   <button class="tab-nav-btn" onclick="switchTab('market', this)">💰 Market & Compensation</button>
   <button class="tab-nav-btn" onclick="switchTab('attrition', this)">📉 Attrition & Retention</button>
@@ -722,14 +722,14 @@ footer {
 </div><!-- /tab-overview -->
 
 
-<!-- ═════════════════════════════════════════ TAB: COMPANIES (100) ══ -->
+<!-- ═════════════════════════════════════════ TAB: COMPANIES (115) ══ -->
 <div id="tab-companies" class="tab-panel">
 
   <div class="data-banner">
   <div class="data-banner-icon">📋</div>
   <div class="data-banner-text">
     <strong>Data Sources &amp; Validation:</strong> Company intelligence compiled from LinkedIn, Glassdoor, Crunchbase, SEC filings, Indeed, ZipRecruiter, NJMEP, Google Maps, and company websites. New companies sourced from Google Maps NJ photonics search (March 2025).
-    Attrition rates marked <strong style="color:var(--green)">✓ LI Validated</strong> are sourced directly from LinkedIn Talent Insights (Lockheed 6.5% · SubCom 13.4% · CACI 7.8% · Nokia 8.2% · TRUMPF 17.3%).
+    Attrition rates marked <strong style="color:var(--green)">✓ Revelio Labs</strong> are sourced from <strong>Revelio Labs</strong> workforce analytics — 12 companies validated from uploaded data file. Rates also cross-validated with LinkedIn Talent Insights where noted (<strong>✓ RL+LI</strong>).
     Compensation figures are sourced from <strong>Glassdoor</strong> public ratings and <strong>Indeed</strong> salary data, reflecting reported employee submissions on those platforms.
   </div>
 </div>
@@ -767,7 +767,7 @@ footer {
   <div class="card">
     <div class="tbl-toolbar">
       <div class="filter-group" id="coFilters">
-        <button class="fbtn act" onclick="filterCo('all',this)">All (100)</button>
+        <button class="fbtn act" onclick="filterCo('all',this)" id="coAllBtn">All (115)</button>
         <button class="fbtn" onclick="filterCo('enterprise',this)">Enterprise</button>
         <button class="fbtn" onclick="filterCo('defense',this)">Defense</button>
         <button class="fbtn" onclick="filterCo('scaleup',this)">Scale-up</button>
@@ -1056,6 +1056,8 @@ footer {
   <div>© 2025 Photonics Talent Intelligence · Confidential · For Leadership Review Only</div>
   <div class="footer-sources">
     <div class="fs">LinkedIn Talent Insights</div>
+    <div class="fs">Revelio Labs Workforce Analytics</div>
+    <div class="fs">Revelio Labs Workforce Analytics</div>
     <div class="fs">Glassdoor / Indeed Analytics</div>
     <div class="fs">Levels.fyi / Blind</div>
     <div class="fs">Company Filings / Crunchbase</div>
@@ -1294,19 +1296,19 @@ const RETENTION_DATA = [
   // LinkedIn-validated attrition where available ✓LI
   {co:"Lockheed Martin", att:6.5, risk:"Low", tenure:"6.4 yrs", gd:4.0, comp:"At mkt", validated:true, source:"LinkedIn Talent Insights", factors:"Strong job security, clearance lock-in, directed energy mission appeal", mitigation:"DE program expansion, early career pipeline from universities"},
   {co:"Nokia Bell Labs", att:8.2, risk:"Low", tenure:"6.8 yrs", gd:4.1, comp:"At mkt", validated:true, source:"LinkedIn Talent Insights", factors:"Research culture; some concern about Nokia parent corporate direction", mitigation:"Protect Bell Labs R&D autonomy, publication & IP incentives"},
-  {co:"CACI / LGS Labs", att:7.8, risk:"Low", tenure:"4.7 yrs", gd:3.9, comp:"At mkt", validated:true, source:"LinkedIn Talent Insights", factors:"Clearance requirement locks talent in; mission-driven defense work", mitigation:"Maintain IRAD investment, technical IC career ladder"},
-  {co:"SubCom (TE Conn.)", att:13.4, risk:"Low", tenure:"6.0 yrs", gd:3.8, comp:"At mkt", validated:true, source:"LinkedIn Talent Insights", factors:"Highly specialized role (undersea EDFA); few global competitors for talent", mitigation:"Succession planning for niche undersea cable engineers"},
-  {co:"TRUMPF Photonics", att:17.3, risk:"Medium", tenure:"4.9 yrs", gd:3.7, comp:"At mkt", validated:true, source:"LinkedIn Talent Insights", factors:"Geographic isolation (Cranbury NJ), limited internal career growth paths", mitigation:"Remote flexibility, establish NJ engineering career ladder"},
-  {co:"Coherent Corp.", att:24, risk:"Medium", tenure:"3.8 yrs", gd:3.6, comp:"At mkt", validated:false, source:"Glassdoor", factors:"Post-M&A culture clash (II-VI + Lumentum integration 2022–24)", mitigation:"Culture integration program, manager calibration"},
+  {co:"CACI / LGS Labs", att:7.8, risk:"Low", tenure:"4.7 yrs", gd:3.9, comp:"At mkt", validated:true, source:"Revelio Labs + LinkedIn TI", factors:"Clearance requirement locks talent in; mission-driven defense work", mitigation:"Maintain IRAD investment, technical IC career ladder"},
+  {co:"SubCom (TE Conn.)", att:13.4, risk:"Low", tenure:"6.0 yrs", gd:3.8, comp:"At mkt", validated:true, source:"Revelio Labs + LinkedIn TI", factors:"Highly specialized role (undersea EDFA); few global competitors for talent", mitigation:"Succession planning for niche undersea cable engineers"},
+  {co:"TRUMPF Photonics", att:17.3, risk:"Medium", tenure:"4.9 yrs", gd:3.7, comp:"At mkt", validated:true, source:"Revelio Labs + LinkedIn TI", factors:"Geographic isolation (Cranbury NJ), limited internal career growth paths", mitigation:"Remote flexibility, establish NJ engineering career ladder"},
+  {co:"Coherent Corp.", att:10.8, risk:"Low", tenure:"3.8 yrs", gd:3.6, comp:"At mkt", validated:true, source:"Revelio Labs", factors:"Post-M&A culture clash (II-VI + Lumentum integration 2022–24)", mitigation:"Culture integration program, manager calibration"},
   {co:"AT&T Labs", att:28, risk:"High", tenure:"3.1 yrs", gd:3.5, comp:"Below mkt", validated:false, source:"Glassdoor", factors:"R&D headcount cuts 2019–2024; photonics role scope shrinking; telecom decline narrative. NOTE: AT&T Labs Middletown NJ is a confirmed optical/DWDM employer — included as talent supply signal, not recruiting target.", mitigation:"External recruiting opportunity — many ex-AT&T Labs optical engineers now available"},
-  {co:"Verizon", att:26, risk:"High", tenure:"3.4 yrs", gd:3.4, comp:"At mkt", validated:false, source:"Glassdoor", factors:"Corporate bureaucracy, limited photonics career paths, focus shift to wireless", mitigation:"External recruiting opportunity — optical networking talent in market"},
-  {co:"Ribbon Comms", att:28, risk:"High", tenure:"2.9 yrs", gd:3.3, comp:"Below mkt", validated:false, source:"Glassdoor", factors:"Post-merger instability, layoffs 2023-24, product line consolidation", mitigation:"Optical networking talent active in market — strong recruitment signal"},
-  {co:"Quantum Transistors", att:28, risk:"High", tenure:"1.8 yrs", gd:4.4, comp:"Above mkt", validated:false, source:"Industry Research", factors:"Startup uncertainty, funding dependency, early-stage team turnover", mitigation:"Series A close signal — watch for talent availability window"},
-  {co:"AQRONOS", att:26, risk:"High", tenure:"1.6 yrs", gd:4.1, comp:"Above mkt", validated:false, source:"Industry Research", factors:"Pre-Series A risk, small team, product-market fit stage", mitigation:"Targeted outreach if funding rounds delayed"},
-  {co:"Cisco / Acacia", att:19, risk:"Low", tenure:"5.1 yrs", gd:4.2, comp:"Above mkt", validated:false, source:"Glassdoor", factors:"Post-acquisition integration; some role duplication in photonics BU", mitigation:"Strong employer — talent stable; focus on competitive offers for passive candidates"},
-  {co:"OFS Fitel", att:18, risk:"Low", tenure:"6.0 yrs", gd:3.6, comp:"At mkt", validated:false, source:"Glassdoor", factors:"Specialty fiber niche; stable, long-tenured workforce — but aging cohort", mitigation:"Knowledge transfer program; watch for retirement-driven openings"},
-  {co:"General Dynamics", att:14, risk:"Low", tenure:"5.8 yrs", gd:3.9, comp:"At mkt", validated:false, source:"Glassdoor", factors:"Defense stability, clearance retention", mitigation:"IRAD expansion drives hiring; clearance premium for candidate pipeline"},
-  {co:"Edmund Optics", att:16, risk:"Low", tenure:"4.8 yrs", gd:3.9, comp:"At mkt", validated:false, source:"Glassdoor", factors:"Stable optics manufacturer; Cherry Hill NJ HQ. Growing e-commerce optics demand", mitigation:"N/A — solid employer for optical talent"},
+  {co:"Verizon", att:9.7, risk:"Low", tenure:"3.4 yrs", gd:3.4, comp:"At mkt", validated:true, source:"Revelio Labs", factors:"Corporate bureaucracy, limited photonics career paths, focus shift to wireless", mitigation:"External recruiting opportunity — optical networking talent in market"},
+  {co:"Ribbon Comms", att:6.7, risk:"Low", tenure:"2.9 yrs", gd:3.3, comp:"Below mkt", validated:true, source:"Revelio Labs", factors:"Post-merger instability, layoffs 2023-24, product line consolidation", mitigation:"Optical networking talent active in market — strong recruitment signal"},
+  {co:"Quantum Transistors", att:13.7, risk:"Low", tenure:"1.8 yrs", gd:4.4, comp:"Above mkt", validated:true, source:"Revelio Labs", factors:"Startup uncertainty, funding dependency, early-stage team turnover", mitigation:"Series A close signal — watch for talent availability window"},
+  {co:"AQRONOS", att:5.0, risk:"Low", tenure:"1.6 yrs", gd:4.1, comp:"Above mkt", validated:true, source:"Revelio Labs", factors:"Pre-Series A risk, small team, product-market fit stage", mitigation:"Targeted outreach if funding rounds delayed"},
+  {co:"Cisco / Acacia", att:10.7, risk:"Low", tenure:"5.1 yrs", gd:4.2, comp:"Above mkt", validated:true, source:"Revelio Labs (Excel)", factors:"Post-acquisition integration; some role duplication in photonics BU", mitigation:"Strong employer — talent stable; focus on competitive offers for passive candidates"},
+  {co:"OFS Fitel", att:6.3, risk:"Low", tenure:"6.0 yrs", gd:3.6, comp:"At mkt", validated:true, source:"Revelio Labs (Excel)", factors:"Specialty fiber niche; stable, long-tenured workforce — but aging cohort", mitigation:"Knowledge transfer program; watch for retirement-driven openings"},
+  {co:"General Dynamics", att:8.6, risk:"Low", tenure:"5.8 yrs", gd:3.9, comp:"At mkt", validated:true, source:"Revelio Labs (Excel)", factors:"Defense stability, clearance retention", mitigation:"IRAD expansion drives hiring; clearance premium for candidate pipeline"},
+  {co:"Edmund Optics", att:15.7, risk:"Medium", tenure:"4.8 yrs", gd:3.9, comp:"At mkt", validated:true, source:"Revelio Labs (Excel)", factors:"Stable optics manufacturer; Cherry Hill NJ HQ. Growing e-commerce optics demand", mitigation:"N/A — solid employer for optical talent"},
 ];
 
 const GLASSDOOR_DATA = [
@@ -1535,10 +1537,10 @@ mkChart('cCounty', {
 mkChart('cAttr', {
   type:'bar',
   data:{
-    labels:['Verizon','Ribbon Comms','AT&T Labs (Middletown)','Q. Transistors','AQRONOS','Coherent Corp.','TRUMPF (✓LI 17.3%)','OFS Fitel','Cisco/Acacia','Nokia (✓LI 8.2%)','CACI/LGS (✓LI 7.8%)','SubCom (✓LI 13.4%)','Gen. Dynamics','Lockheed (✓LI 6.5%)'],
+    labels:['Verizon (✓RL)','Ribbon Comms (✓RL)','AT&T Labs','Q. Transistors (✓RL)','AQRONOS (✓RL)','Coherent Corp. (✓RL)','TRUMPF (✓RL+LI)','OFS Fitel (✓RL)','Cisco/Acacia (✓RL)','Nokia (✓LI)','CACI/LGS (✓RL+LI)','SubCom (✓RL+LI)','Gen. Dynamics (✓RL)','Lockheed (✓LI)'],
     datasets:[{
       label:'Attrition Rate %',
-      data:[26,28,28,28,26,24,17.3,18,19,8.2,7.8,13.4,14,6.5],
+      data:[9.7,6.7,28,13.7,5.0,10.8,17.3,6.3,10.7,8.2,7.8,13.4,8.6,6.5],
       backgroundColor:d=>{
         const v=d.raw; return v>=30?'rgba(220,38,38,0.8)':v>=22?'rgba(217,119,6,0.8)':'rgba(5,150,105,0.8)';
       },
@@ -1719,7 +1721,7 @@ SALARY_BANDS.forEach(s=>{
   </div>`;
 });
 
-// ═══════════════════════ COMPANY TABLE 100 ═══════════════════════
+// ═══════════════════════ COMPANY TABLE (115 VERIFIED) ═══════════════════════
 let coFilter='all', coSearch='', coPage=1;
 const CO_PAGE=20;
 
@@ -1727,6 +1729,13 @@ function getRankClass(r){return r===1?'rank-1':r<=5?'rank-top5':r<=20?'rank-top2
 function getRiskTag(risk){const m={Low:'tag-green',Medium:'tag-amber',High:'tag-red'};return `<span class="tag ${m[risk]}">${risk}</span>`;}
 function getTypeTag(t){const m={enterprise:'tag-blue',defense:'tag-purple',scaleup:'tag-teal',startup:'tag-amber'};const l={enterprise:'Enterprise',defense:'Defense',scaleup:'Scale-up',startup:'Startup'};return `<span class="tag ${m[t]}">${l[t]}</span>`;}
 function stars(n){const full=Math.round(n);return '<span style="color:#D97706;font-size:13px;">'+'★'.repeat(full)+'☆'.repeat(5-full)+'</span> <span style="font-family:\'IBM Plex Mono\',monospace;font-size:11px;color:#3A4D63;">'+n.toFixed(1)+'</span>';}
+function updateCoBadge(){
+  const n=TOP100.length;
+  const b=document.getElementById('coAllBtn');
+  if(b) b.textContent='All ('+n+')';
+  const t=document.getElementById('coTabBadge');
+  if(t) t.textContent=n;
+}
 function getFilteredCo(){
   return TOP100.filter(c=>{
     const m = coFilter==='all' || c.type===coFilter || (coFilter==='nj'&&(c.nj_type==='HQ'||c.nj_type==='Office'||c.nj_type==='Lab'||c.nj_type==='R&D Site'));
@@ -1773,7 +1782,7 @@ function renderCo(page){
   }
   if(pages>8){pgn.innerHTML+=`<span style="color:var(--text4);font-size:11px;font-family:'IBM Plex Mono',monospace;">... ${pages} total</span>`;}
 }
-function filterCo(f,btn){coFilter=f;coSearch='';document.querySelectorAll('#coFilters .fbtn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');renderCo(1);}
+function filterCo(f,btn){coFilter=f;coSearch='';document.querySelectorAll('#coFilters .fbtn').forEach(b=>b.classList.remove('act'));btn.classList.add('act');updateCoBadge(); renderCo(1);}
 function searchCo(q){coSearch=q.toLowerCase();renderCo(1);}
 renderCo(1);
 
