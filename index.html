@@ -260,7 +260,6 @@ thead th {
   border-bottom: 2px solid var(--border2);
   border-right: 1px solid var(--border);
   position: sticky; top: 0; z-index: 10;
-  min-width: 80px;
   box-shadow: 0 2px 4px rgba(15,28,46,0.05);
 }
 thead th:last-child { border-right: none; }
@@ -268,7 +267,7 @@ tbody td {
   padding: 11px 14px; font-size: 12px; color: var(--text2);
   border-bottom: 1px solid var(--border);
   border-right: 1px solid rgba(221,227,238,0.4);
-  vertical-align: middle; white-space: nowrap;
+  vertical-align: middle; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 0;
 }
 tbody td:last-child { border-right: none; }
 tbody tr:hover td { background: var(--blue-light); }
@@ -782,7 +781,14 @@ footer {
       </div>
     </div>
     <div class="tbl-wrap">
-      <table>
+      <table style="table-layout:fixed;width:100%;min-width:1320px;">
+        <colgroup>
+          <col style="width:46px;"><col style="width:182px;"><col style="width:148px;">
+          <col style="width:218px;"><col style="width:86px;"><col style="width:108px;">
+          <col style="width:138px;"><col style="width:122px;"><col style="width:76px;">
+          <col style="width:76px;"><col style="width:78px;"><col style="width:86px;">
+          <col style="width:130px;">
+        </colgroup>
         <thead>
           <tr>
             <th>#</th>
@@ -790,12 +796,12 @@ footer {
             <th>HQ / NJ Location</th>
             <th>Photonics Focus</th>
             <th>Type</th>
-            <th>NJ Presence Type</th>
+            <th>NJ Presence</th>
             <th>Est. Global HC</th>
             <th>Revenue (2024)</th>
-            <th>NJ Photo. Talent</th>
-            <th>Open Roles (90d)</th>
-            <th>Avg NJ Salary</th>
+            <th style="text-align:center;">NJ Talent</th>
+            <th style="text-align:center;">Roles (90d)</th>
+            <th>Avg Salary</th>
             <th>Glassdoor</th>
             <th>Attrition Risk</th>
           </tr>
@@ -1756,12 +1762,12 @@ function renderCo(page){
         <div>${c.loc}</div>
         <div style="margin-top:3px;">${c.nj_type==='HQ'?'<span class="tag tag-green" style="font-size:9px;">HQ · NJ</span>':c.nj_type==='Office'?'<span class="tag tag-blue" style="font-size:9px;">Office · NJ</span>':c.nj_type==='Lab'?'<span class="tag tag-purple" style="font-size:9px;">Lab · NJ</span>':c.nj_type==='R&D Site'?'<span class="tag tag-teal" style="font-size:9px;">R&D · NJ</span>':c.nj_type==='Service Office'?'<span class="tag tag-gray" style="font-size:9px;">Service · NJ</span>':'<span class="tag tag-gray" style="font-size:9px;">No NJ Office</span>'}</div>
       </td>
-      <td style="font-size:11px;max-width:220px;">${c.focus}</td>
+      <td style="font-size:11px;" title="${c.focus}">${c.focus}</td>
       <td>${getTypeTag(c.type)}</td>
-      <td style="font-size:11px;">${c.hc}</td>
-      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;">${c.rev}</td>
-      <td style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#1A56DB;font-weight:700;">${c.nj_talent}</td>
-      <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:${c.postings>=15?'#059669':c.postings>=8?'#D97706':'#9DAFC4'};">${c.postings}</td>
+      <td style="font-size:11px;" title="${c.hc}">${c.hc}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;" title="${c.rev}">${c.rev}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:13px;color:#1A56DB;font-weight:700;text-align:center;">${c.nj_talent}</td>
+      <td style="font-family:'IBM Plex Mono',monospace;font-size:12px;color:${c.postings>=15?'#059669':c.postings>=8?'#D97706':'#9DAFC4'};text-align:center;">${c.postings}</td>
       <td style="font-family:'IBM Plex Mono',monospace;font-size:11px;color:#D97706;">${c.salary}</td>
       <td>${c.glassdoor ? stars(c.glassdoor) : '<span style="color:var(--text3);font-size:11px;">—</span>'}</td>
       <td><div class="risk-meter">
